@@ -28,8 +28,8 @@ RUN yum -y install Xvfb
 ENV DISPLAY :99
 
 # User
-RUN useradd -ms /bin/bash searchlight
-USER searchlight
+RUN useradd -ms /bin/bash myuser
+USER myuser
 
 # Add application source
 WORKDIR /
@@ -39,8 +39,8 @@ WORKDIR /sl_acceptance_tests
 # Apply user permissions
 USER root
 RUN mkdir /sl_acceptance_tests/jenkins/report
-RUN chown -R searchlight /sl_acceptance_tests
-USER searchlight
+RUN chown -R myuser /sl_acceptance_tests
+USER myuser
 
 # Install npm modules
 RUN npm install
@@ -49,7 +49,7 @@ RUN npm install
 USER root
 RUN ln -sf /sl_acceptance_tests/node_modules/.bin/protractor /apps/node/bin/protractor
 RUN  ln -sf /sl_acceptance_tests/node_modules/.bin/webdriver-manager /apps/node/bin/webdriver-manager
-USER searchlight
+USER myuser
 
 # Install Selenium and Chrome driver
 RUN webdriver-manager update --standalone
